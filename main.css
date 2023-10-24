@@ -29,7 +29,7 @@
 }
 
 navbar ul{
-    background-color: lightblue;
+    background-color: black;
     display: flex;
     height: 30%;
     justify-content: space-between;
@@ -42,10 +42,9 @@ navbar li{
     color: white;
     width: 100%;
     list-style-type: none;
+    margin-left: 10%;
 }
 navbar li:hover{
-    color: black;
-    background-color: white;
     list-style-type: none;
     width: 100%;
     scale: 1.02;

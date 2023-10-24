@@ -1,0 +1,8 @@
+1. Order leadership roles by party
+2. Senators.html should provide a way to filter the senators in step 2 above by: 
+
+- Filter senators by party (with ‘show all’ as the default option). 
+
+- Filter senators by state (with ‘show all’ as the default option). 
+
+- Filter senators by rank (with ‘show all’ as the default option).
