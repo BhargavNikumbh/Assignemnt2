@@ -74,8 +74,8 @@ async function displayData(data){
             leadershipPartyList.push(senatorParty);
         }
         senatorConatiner+=
-                        `<div class="senator_container">
-                            <button type="button" class="collapsible" onclick="manageCollapsableContent()">
+                        `<div class="senator_container" onclick="manageCollapsableContent()">
+                            <button type="button" class="collapsible">
                                 <h3>${senatorName+" "+senatorPerson.lastname}</h3>
                                 <b>Party: &nbsp;</b>${senatorParty}
                                 <b>State: &nbsp;</b> ${senatorState}
