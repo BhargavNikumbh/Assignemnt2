@@ -1,5 +1,5 @@
 //Managing collapsible buttons
-const manageCollapsableContent=()=>{
+function manageCollapsableContent(){
     let col1 = document.getElementsByClassName("collapsible");
     let i;
     for(i=0;i<col1.length;i++){
