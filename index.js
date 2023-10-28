@@ -225,6 +225,12 @@ async function displayFilteredSenatorPage() {
         filteredArray.push(obj);
       }
   }
+  senatorConatiner+=`<h3>Showing results for:
+                      <div style="display: flex;">
+                      <p>Party: ${filterMap.get("party")}</p> &emsp;
+                      <p>Rank: ${filterMap.get("rank")}</p> &emsp;
+                      <p>State: ${filterMap.get("state")}</p> &nbsp;
+                      </div></h3>`
   filterMap.set("party",null);
   filterMap.set("rank",null);
   filterMap.set("state",null);
@@ -232,7 +238,7 @@ async function displayFilteredSenatorPage() {
   console.log("filtered Array after for loop"+filteredArray.length);
   if(filteredArray.length>0){
     for (let obj of filteredArray) {
-      senatorConatiner += `<div class="senator_container" onclick="manageCollapsableContent()">
+      senatorConatiner += `   <div class="senator_container" onclick="manageCollapsableContent()">
                               <button type="button" class="collapsible">
                                   <h3>${
                                     obj.person.firstname +
@@ -267,6 +273,7 @@ async function displayFilteredSenatorPage() {
     }
   }else{
     senatorConatiner+=`<h1>Sorry, No Senators Found</h1>`
+    filteredArray=data.objects;
   }
   
   document.getElementById("app-root").innerHTML = senatorConatiner;

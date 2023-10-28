@@ -20,6 +20,7 @@ body{
 
 .active .collapsible:hover{
     background-color: #ccc;
+    cursor:crosshair;
 }
 
 .content{
