@@ -119,6 +119,11 @@ function displayLeaderPage() {
   let leadershipList = `<div>
                             <b>Leadership List</b>
                         </div>`;
+  let demoLeaderList=[];
+  let repubLeaderList=[];
+  // for(let i=0;i<leadershipPostList.length;i++){
+  //   if(leadershipPostList.leadershipPartyList)
+  // }
   for (let i = 0; i < leadershipPostList.length; i++) {
     leadershipList += `<div class="leader">
                           <p>${leadershipPostList[i]}: ${leadershipPostNameList[i]} (${leadershipPartyList[i]})</p>
@@ -278,57 +283,3 @@ async function displayFilteredSenatorPage() {
   
   document.getElementById("app-root").innerHTML = senatorConatiner;
 }
-
-const displayRepublicans = (rank, state) => {
-  console.log(state);
-  console.log(rank);
-  let replicanContainer = filter_dropdown;
-  for (let republican of republicansList) {
-    replicanContainer += `
-                        <div class="senator_container">
-                            <button type="button" class="collapsible" onclick="manageCollapsableContent()">
-                                <h3>${republican.person.firstname} ${republican.person.lastname}</h3>
-                                <b>Party: &nbsp;</b>${republican.party}
-                                <b>State: &nbsp;</b> ${republican.state}
-                                <b>Gender: &nbsp;</b> ${republican.person.gender}
-                                <b>Rank: &nbsp;</b> ${republican.senator_rank_label}
-                            </button>
-                            <div class="content">
-                            <b><p>Office: &nbsp;</p>${republican.extra.office}</b>
-                                
-                                <b><p>Date of Birth: &nbsp;</p>${republican.person.birthday}</b>
-                                <b><p>Start Date: &nbsp;</p>${republican.startdate}</b>
-                                <b><p>Twitter: &nbsp;</p></b> <a href="${republican.person.twitterid}">${republican.person.twitterid}</a>
-                                <b><p>YouTube Handle: &nbsp;</p></b><a href="${republican.person.website}">${republican.person.website}</a>
-                                <b><p>Senator Website: &nbsp;</p></b><a href="${republican.website}" target="_blank">${republican.website}</a>
-                            </div>
-                        </div>`;
-  }
-  document.getElementById("app-root").innerHTML = replicanContainer;
-};
-const displayDemocrats = () => {
-  let democratContainer = filter_dropdown;
-  for (let republican of democratsList) {
-    democratContainer += `
-                        <div class="senator_container">
-                            <button type="button" class="collapsible" onclick="manageCollapsableContent()">
-                                <h3>${republican.person.firstname} ${republican.person.lastname}</h3>
-                                <b>Party: &nbsp;</b>${republican.party}
-                                <b>State: &nbsp;</b> ${republican.state}
-                                <b>Gender: &nbsp;</b> ${republican.person.gender}
-                                <b>Rank: &nbsp;</b> ${republican.senator_rank_label}
-                            </button>
-                            <div class="content">
-                            <b><p>Office: &nbsp;</p>${republican.extra.office}</b>
-                                
-                                <b><p>Date of Birth: &nbsp;</p>${republican.person.birthday}</b>
-                                <b><p>Start Date: &nbsp;</p>${republican.startdate}</b>
-                                <b><p>Twitter: &nbsp;</p></b> <a href="${republican.person.twitterid}">${republican.person.twitterid}</a>
-                                <b><p>YouTube Handle: &nbsp;</p></b><a href="${republican.person.website}">${republican.person.website}</a>
-                                <b><p>Senator Website: &nbsp;</p></b><a href="${republican.website}" target="_blank">${republican.website}</a>
-                            </div>
-                        </div>`;
-    console.log(republican);
-  }
-  document.getElementById("app-root").innerHTML = democratContainer;
-};
