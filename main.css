@@ -15,7 +15,8 @@ body{
     border: none;
     text-align: left;
     outline: none;
-    font-size: 15px;
+    font-size: large;
+    border-radius: 10px;
 }
 
 .active .collapsible:hover{
@@ -29,11 +30,19 @@ body{
     overflow: hidden;
     background-color: #f1f1f1;
     transition: max-height 0.2s ease-out;
+    font-size: large;
+    border-radius: 10px;
 }
 
 .senator_container{
     opacity: 1;
     padding: 3px;
+}
+
+.senator_container:hover{
+    opacity: 1;
+    padding: 3px;
+    scale: 1.01;
 }
 
 navbar ul{
@@ -63,7 +72,9 @@ navbar li:hover{
 }
 
 .leader{
-    color: purple;
+    color: black;
+    font-size: large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 body{
@@ -71,4 +82,24 @@ body{
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%;
+}
+
+button{
+    padding: 0.5%;
+    background-color: lightgreen;
+    color: white;
+    font-size: large;
+    border: #333 1px solid;
+    border-radius: 10px;
+    shape-outside: margin-box;
+}
+
+select{
+    font-size: large;
+    background-color: white;
+    border-radius: 2px;
+}
+
+label{
+    font-size: large;
 }
