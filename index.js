@@ -15,7 +15,6 @@ let optionState="";
 let filter_dropdown;
 let leaderObj=[];
 
-// let senatorArray = data.objects;
 let filteredArray= [];
 
 let filterMap = new Map();
@@ -51,11 +50,6 @@ function prepareData(data) {
     stateSet.add(obj.state);
 
     if (obj.leadership_title != null) {
-      // leadershipPostList.push(obj.leadership_title);
-      // leadershipPostNameList.push(
-      //   obj.person.firstname + " " + obj.person.lastname
-      // );
-      // leadershipPartyList.push(obj.party);
       leaderObj.push(obj);
     }
     ctsenator++;
@@ -94,6 +88,7 @@ async function displayHomePage() {
   document.getElementById("app-root").innerHTML = overAllCount;
 }
 
+// Taken From Google Charts to display Pie-Chart For the senators
 const showchart = () => {
   google.charts.load("current", { packages: ["corechart"] });
   google.charts.setOnLoadCallback(drawChart);
@@ -117,24 +112,25 @@ const showchart = () => {
 };
 
 function displayLeaderPage() {
-  let leadershipList = `<div>
+  let leadershipList = `<div class="leader">
                             <b>Leadership List</b>
-                        </div>`;
+                        `;
   let demoLeaderList=[];
   for(let obj of leaderObj){
     if(obj.party == 'Republican'){
-      leadershipList += `<div class="leader">
+      leadershipList += `
                           <p>${obj.leadership_title} : ${obj.person.firstname} ${obj.person.lastname}(${obj.party})</p>
-                      </div>`;
+                      `;
     }else{
       demoLeaderList.push(obj);
     }
   }
   for (let obj of demoLeaderList) {
-    leadershipList += `<div class="leader">
+    leadershipList += `
                           <p> ${obj.leadership_title} : ${obj.person.firstname} ${obj.person.lastname}(${obj.party})</p>
-                      </div>`;
+                      `;
   }
+  leadershipList+=`</div>`;
   document.getElementById("app-root").innerHTML = leadershipList;
 }
 
