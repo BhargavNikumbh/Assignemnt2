@@ -134,30 +134,6 @@ function displayLeaderPage() {
   document.getElementById("app-root").innerHTML = leadershipList;
 }
 
-// To fix filter browser issue: Use onChange for 'select' instead of onClick 
-// (because onClick doesn't support event for 'option')
-
-function handleChangeSenators(e) {
-  let name = e.target.name
-  let value = e.target.value
-  if (value === 'all') {
-    displaySenatorPage()
-  } else {
-    switch (name) {
-      case 'senators':
-        setFilterMap(value, null, null)
-        break
-      case 'rank_senators':
-        setFilterMap(null, value, null)
-        break
-      case 'state_senators':
-        setFilterMap(null, null, value)
-        break
-    }
-  }
-
-}
-
 async function displaySenatorPage() {
   let republicanArray = [];
   let demoArray = [];
@@ -177,29 +153,28 @@ async function displaySenatorPage() {
   senatorArray = republicanArray.concat(demoArray);
 
   stateSet.forEach((value)=>{
-    optionState+=`<option value="${value}" id="${value}" name="${value}">${value}</option> `
+    optionState+=`<option onclick="setFilterMap(null,null, document.getElementById('${value}').value)" id="${value}" name="${value}">${value}</option> `
   });
 
   filter_dropdown = `<div>
                         <label>Order Senators by Party:</label>
-                        <select name="senators" id="senators" onchange="handleChangeSenators(event)">
-                                <option value="all">Show All</option>
-                                <option value="Republican" id="republican" name="republican">Republican</option>
-                                <option value="Democrat" id="democrat" name="democrat">Democrat</option>
+                        <select name="senators" id="senators">
+                                <option onclick="displaySenatorPage()">All</option>
+                                <option onclick="setFilterMap(document.getElementById('republican').value,null,null)" id="republican" name="republican">Republican</option>
+                                <option onclick="setFilterMap(document.getElementById('democrat').value,null,null)" id="democrat" name="democrat">Democrat</option>
                         </select>
                         <label>Order Senators by Rank:</label>
-                        <select name="rank_senators" id="rank_senators" onchange="handleChangeSenators(event)">
-                                <option value="all">Show All</option>
-                                <option value="Senior" id="rankSenior" name="senior">Senior</option>
-                                <option value="Junior" id="rankJunior" name="junior">Junior</option>
+                        <select name="rank_senators" id="rank_senators">
+                                <option onclick="displaySenatorPage()">All</option>
+                                <option onclick="setFilterMap(null,document.getElementById('rankSenior').value,null)" id="rankSenior" name="senior">Senior</option>
+                                <option onclick="setFilterMap(null,document.getElementById('rankJunior').value,null)" id="rankJunior" name="junior">Junior</option>
                         </select>
                         <label>Order Senators by State:</label>
-                        <select name="state_senators" id="state_senators" onchange="handleChangeSenators(event)">
-                        <option>See All</option>`;
+                        <select name="state_senators" id="state_senators">
+                        <option onclick="displaySenatorPage()">All</option>`;
   filter_dropdown+=optionState;
   filter_dropdown+=`
                 </select>
-                <!-- <button id="searchButton">Search 2</button> -->
                 <button onclick="displayFilteredSenatorPage()">Search</button>
                 <button onclick="displaySenatorPage()">See All</button>
               </div>
@@ -241,10 +216,6 @@ async function displaySenatorPage() {
                         </div>`;
   }
   document.getElementById("app-root").innerHTML = senatorConatiner;
-
-  // let searchButton = document.getElementById("searchButton");
-  // searchButton.addEventListener("click", displayFilteredSenatorPage) 
-  // for demo purpose
 }
 
 async function displayFilteredSenatorPage(){

@@ -10,3 +10,8 @@
 3. Two Navbars into one Navbars
 4. Duplication of leadership roles when we apply filters
 5. Delete the filter navbar
+6. Add others i filter
+7. error message when no senator
+8. After selection retain the selection.
+9. Explain search functionality in UI "Click on search to apply the filter"
+10. 
