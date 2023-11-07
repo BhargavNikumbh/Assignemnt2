@@ -14,4 +14,8 @@
 7. error message when no senator
 8. After selection retain the selection.
 9. Explain search functionality in UI "Click on search to apply the filter"
-10. 
+10. Active state for dropdown filters and buttons + active cursor when hovering on buttons & filters
+11. To optimize State filter, replace 'forEach' with 'map' (array iterator)
+12. When clicking on Search, get value from Select Element (by id): Use function getElementbyId (add class to both html and js)
+        Copy html code to html file
+        Replace onclick parts in js file with id (from html?)

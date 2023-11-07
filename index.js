@@ -98,7 +98,7 @@ const showchart = () => {
       ["Party", "Total Number of Senators"],
       ["Republicans", ctreplub],
       ["Democrats", ctdemo],
-      ["Third Pary", ctreplub - ctdemo],
+      ["Independent", ctreplub - ctdemo],
     ]);
 
     var options = {
@@ -114,28 +114,31 @@ const showchart = () => {
 function displayLeaderPage() {
   let leadershipList = `<div class="leader">
                             <b>Leadership List</b>
+                            <div class="grid-container">
+                              <div class="grid-item">
                         `;
+                        leadershipList+=`<div class="grid-container">
+                        <div class="grid-item"><b>Republican</b>`;
   let demoLeaderList=[];
   for(let obj of leaderObj){
     if(obj.party == 'Republican'){
       leadershipList += `
-                          <p>${obj.leadership_title} : ${obj.person.firstname} ${obj.person.lastname}(${obj.party})</p>
+                          <p>${obj.leadership_title} : ${obj.person.firstname} ${obj.person.lastname}(${obj.party})</p> 
                       `;
     }else{
       demoLeaderList.push(obj);
     }
   }
+
+leadershipList+=`</div><div class="grid-item"><b>Democrats</b>`
+
   for (let obj of demoLeaderList) {
     leadershipList += `
-                          <p> ${obj.leadership_title} : ${obj.person.firstname} ${obj.person.lastname}(${obj.party})</p>
-                      `;
+                          <p> ${obj.leadership_title} : ${obj.person.firstname} ${obj.person.lastname}(${obj.party})</p>`;
   }
-  leadershipList+=`</div>`;
+  leadershipList+=`</div></div>`;
   document.getElementById("app-root").innerHTML = leadershipList;
 }
-
-// To fix filter browser issue: Use onChange for 'select' instead of onClick 
-// (because onClick doesn't support event for 'option')
 
 function handleChangeSenators(e) {
   let name = e.target.name
@@ -186,6 +189,7 @@ async function displaySenatorPage() {
                                 <option value="all">Show All</option>
                                 <option value="Republican" id="republican" name="republican">Republican</option>
                                 <option value="Democrat" id="democrat" name="democrat">Democrat</option>
+                                <option value="Independent" id="Independent" name="Independent">Independent</option>
                         </select>
                         <label>Order Senators by Rank:</label>
                         <select name="rank_senators" id="rank_senators" onchange="handleChangeSenators(event)">
@@ -209,6 +213,7 @@ async function displaySenatorPage() {
   for (let obj of senatorArray) {
     senatorConatiner += `<div class="senator_container" onclick="manageCollapsableContent()">
                             <button type="button" class="collapsible">
+                                <div>
                                 <h3>${
                                   obj.person.firstname +
                                   " " +
@@ -217,34 +222,36 @@ async function displaySenatorPage() {
                                 <b>Party: &nbsp;</b>${obj.party}
                                 <b>State: &nbsp;</b> ${obj.state}
                                 <b>Gender: &nbsp;</b> ${obj.person.gender}
-                                <b>Rank: &nbsp;</b> ${obj.senator_rank_label}
-                            </button>
-                            <div class="content">
-                            <b><p>Office: &nbsp;</p></b>${obj.extra.address}
+                                <b>Rank: &nbsp;</b> ${obj.senator_rank_label}`;
                                 
-                                <b><p>Date of Birth: &nbsp;</p></b> ${
-                                  obj.person.birthday
+                                if(obj.party=="Republican"){
+                                  senatorConatiner+=`<img src='./assets/logo-Republican-National-Committee.webp'>`
+                                }else{
+                                  senatorConatiner+=`<img src='./assets/democrats.jpg'>`
                                 }
-                                <b><p>Start Date: &nbsp;</p></b> ${
-                                  obj.startdate
-                                }
-                                <b><p>Twitter: &nbsp;</p></b> <a href="${
-                                  obj.person.twitterid
-                                }">${obj.person.twitterid}</a>
-                                <b><p>YouTube Handle: &nbsp;</p></b> <a href="${
-                                  obj.person.youtubeid
-                                }">${obj.person.youtubeid}</a>
-                                <b><p>Senator Website: &nbsp;</p></b> <a href="${
-                                  obj.website
-                                }" target="_blank">${obj.website}</a>
+                            senatorConatiner+=`</button>
+                            <div class="content">
+                              <b><p>Office: &nbsp;</p></b>${obj.extra.address}
+                              <b><p>Date of Birth: &nbsp;</p></b> ${
+                                obj.person.birthday
+                              }
+                              <b><p>Start Date: &nbsp;</p></b> ${
+                                obj.startdate
+                              }
+                              <b><p>Twitter: &nbsp;</p></b> <a href="${
+                                obj.person.twitterid
+                              }">${obj.person.twitterid}</a>
+                              <b><p>YouTube Handle: &nbsp;</p></b> <a href="${
+                                obj.person.youtubeid
+                              }">${obj.person.youtubeid}</a>
+                              <b><p>Senator Website: &nbsp;</p></b> <a href="${
+                                obj.website
+                              }" target="_blank">${obj.website}</a>
+                              </div>
                             </div>
                         </div>`;
   }
   document.getElementById("app-root").innerHTML = senatorConatiner;
-
-  // let searchButton = document.getElementById("searchButton");
-  // searchButton.addEventListener("click", displayFilteredSenatorPage) 
-  // for demo purpose
 }
 
 async function displayFilteredSenatorPage(){
@@ -257,7 +264,7 @@ async function displayFilteredSenatorPage(){
   if(filterMap.get("party")==null && filterMap.get("state")==null && filterMap.get("rank")==null){
     displaySenatorPage();
   }
-  for(let obj of senatorArray){
+  senatorArray.map((obj)=>{
     if(filterMap.get("party")==obj.party && filterMap.get("state")==obj.state && filterMap.get("rank")==obj.senator_rank_label){
       displayArray.push(obj);
     }else if(filterMap.get("party")==obj.party && filterMap.get("state")==null && filterMap.get("rank")==null){
@@ -273,7 +280,7 @@ async function displayFilteredSenatorPage(){
     }else if(filterMap.get("party")==null && filterMap.get("state")==obj.state && filterMap.get("rank")==obj.senator_rank_label){
       displayArray.push(obj);
     }
-  }
+  })
 
   for(let obj of displayArray){
     if(obj.party=='Republican'){
@@ -282,25 +289,36 @@ async function displayFilteredSenatorPage(){
       demoArray.push(obj);
     }
   }
-  
+  senatorConatiner+=`<h3>Showing Results For Party:${filterMap.get("party")}, State: ${filterMap.get("state")} and Rank: ${filterMap.get("rank")}</h3>`;
   displayArray = republicanArray.concat(demoArray);
-
-  for (let obj of displayArray) {
-    senatorConatiner += `   <div class="senator_container" onclick="manageCollapsableContent()">
-                            <button type="button" class="collapsible">
-                                <h3>${
-                                  obj.person.firstname +
-                                  " " +
-                                  obj.person.lastname
-                                }</h3>
-                                <b>Party: &nbsp;</b>${obj.party}
-                                <b>State: &nbsp;</b> ${obj.state}
-                                <b>Gender: &nbsp;</b> ${obj.person.gender}
-                                <b>Rank: &nbsp;</b> ${obj.senator_rank_label}
-                            </button>
-                            <div class="content">
-                            <b><p>Office: &nbsp;</p></b>${obj.extra.address}
-                                
+  if(displayArray.length ===0){
+    senatorConatiner+=`<h3>No Results Found for Party:${filterMap.get("party")}, State: ${filterMap.get("state")} and Rank: ${filterMap.get("rank")}</h3>`;
+  }else{
+    for (let obj of displayArray) {
+      senatorConatiner += `
+      <div class="senator_container" onclick="manageCollapsableContent()">
+                              <button type="button" class="collapsible">
+                                  <div>
+                                  <h3>${
+                                    obj.person.firstname +
+                                    " " +
+                                    obj.person.lastname
+                                  }</h3>
+                                  <b>Party: &nbsp;</b>${obj.party}
+                                  <b>State: &nbsp;</b> ${obj.state}
+                                  <b>Gender: &nbsp;</b> ${obj.person.gender}
+                                  <b>Rank: &nbsp;</b> ${obj.senator_rank_label}`;
+                                  
+                                  if(obj.party=="Republican"){
+                                    senatorConatiner+=`<img src='./assets/logo-Republican-National-Committee.webp'>`
+                                  }else if(obj.party=="Democrat"){
+                                    senatorConatiner+=`<img src='./assets/democrats.jpg'>`
+                                  }else{
+                                    senatorConatiner+=`<img src='./assets/independent.jpg'>`;
+                                  }
+                              senatorConatiner+=`</button>
+                              <div class="content">
+                                <b><p>Office: &nbsp;</p></b>${obj.extra.address}
                                 <b><p>Date of Birth: &nbsp;</p></b> ${
                                   obj.person.birthday
                                 }
@@ -316,11 +334,13 @@ async function displayFilteredSenatorPage(){
                                 <b><p>Senator Website: &nbsp;</p></b> <a href="${
                                   obj.website
                                 }" target="_blank">${obj.website}</a>
-                            </div>
-                        </div>`;
+                                </div>
+                              </div>
+                          </div>`;
+    }
   }
-  document.getElementById("app-root").innerHTML = senatorConatiner;
-  filterMap.set("party",null);
-  filterMap.set("rank",null);
-  filterMap.set("state",null);
+    document.getElementById("app-root").innerHTML = senatorConatiner;
+    filterMap.set("party",null);
+    filterMap.set("rank",null);
+    filterMap.set("state",null);
 }
